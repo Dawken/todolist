@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<header>
+
+    <title>To Do List</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css-todolist.css" type="text/css">
+
+</header>
+
+<body>
+    <main>
+        <div class="input">
+            <input type="text" id="task-input" placeholder="What are we doin today?"/>
+            <button id="submit">Add task</button>
+        </div>
+        <div class="container">
+            
+            <div class="todo">
+                <div id="top">
+                    <h1>To do</h1>
+                </div>
+              <div class = "bottom"></div>
+            
+            </div>
+
+            <div class="during">
+                <div id="top">
+                    <h1>During</h1>
+                </div>
+                
+                
+            </div>
+
+            <div class="done">
+                <div id="top">
+                    <h1>Done</h1>
+                </div>
+                
+            </div>
+
+        </div>
+    </main>
+    <div id="bg">
+        <canvas></canvas>
+        <canvas></canvas>
+        <canvas></canvas>
+    </div>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="js-todolist.js"></script>
+    <script src="js-background.js"></script>
+</body>
+
+</html>
