@@ -96,23 +96,8 @@ const createOptionsDoneBtn = () => {
     return donebtn
 }
 
-submit.addEventListener("click",  () => {
-
-    const task = {
-        value: input.value,
-        id: generateId()
-    }
-    const todoListToUpdate = JSON.parse(localStorage.getItem('todolist'))
-    todoListToUpdate.push(task)
-    localStorage.setItem('todolist', JSON.stringify(todoListToUpdate))
-
-    if (task.value === '') {
-        alert("Please fill the task")
-        return
-    }
-    input.value = ''
-
-    const taskContainer = createContainer(todo, task)
+const createTask = (task, taskListContainer) => {
+    const taskContainer = createContainer(taskListContainer, task)
     const options = taskContainer.querySelector(".options")
     const duringbtn = createOptionsDuringBtn()
     const donebtn = createOptionsDoneBtn()
@@ -167,6 +152,27 @@ submit.addEventListener("click",  () => {
         removeTask("duringlist", task.id)
         options.replaceChild(duringbtn, todobtn)
     })
+}
+
+
+submit.addEventListener("click",  () => {
+
+
+    const task = {
+        value: input.value,
+        id: generateId()
+    }
+    const todoListToUpdate = JSON.parse(localStorage.getItem('todolist'))
+    todoListToUpdate.push(task)
+    localStorage.setItem('todolist', JSON.stringify(todoListToUpdate))
+
+    if (task.value === '') {
+        alert("Please fill the task")
+        return
+    }
+    input.value = ''
+    createTask(task, todo)
+
 });
 const deleteTask = (taskList, taskContainer) => {
     taskList.removeChild(taskContainer)
@@ -180,121 +186,15 @@ window.addEventListener("load", () => {
     for(let i = 0; i<todolist.length ; i++) {
 
         const content = todolist[i]
-        const taskContainer = createContainer(todo, content)
-        const options = taskContainer.querySelector(".options")
-        const duringbtn = createOptionsDuringBtn()
-        const donebtn = createOptionsDoneBtn()
-        const todobtn = createOptionsTodoBtn()
-        options.appendChild(duringbtn)
-        options.appendChild(donebtn)
-        const deletebtn = options.querySelector("#delete")
-        deletebtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.classList.remove("animation")
-            setTimeout(deleteTask, 150, todo, taskContainer)
-            removeTask("todolist", content.id)
-        })
-        duringbtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.classList.remove("animation")
-            setTimeout(addanimation, 150, taskContainer)
-            during.appendChild(taskContainer)
-            duringlist.push(content)
-            localStorage.setItem('duringlist', JSON.stringify(duringlist))
-            removeTask("todolist", content.id)
-            removeTask("donelist", content.id)
-            options.replaceChild(todobtn, duringbtn)
-        })
-        donebtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.classList.remove("animation")
-            setTimeout(addanimation, 150, taskContainer)
-            done.appendChild(taskContainer)
-            donelist.push(content)
-            localStorage.setItem('donelist', JSON.stringify(donelist))
-            removeTask("todolist", content.id)
-            removeTask("duringlist", content.id)
-            options.replaceChild(duringbtn, todobtn)
-        })
+        createTask(content, todo)
     }
     for(let i = 0; i<duringlist.length ; i++) {
         const content = duringlist[i]
-        const taskContainer = createContainer(during, content)
-        const options = taskContainer.querySelector(".options")
-        const duringbtn = createOptionsDuringBtn()
-        const donebtn = createOptionsDoneBtn()
-        const todobtn = createOptionsTodoBtn()
-        options.appendChild(todobtn)
-        options.appendChild(donebtn)
-        const deletebtn = options.querySelector("#delete")
-        deletebtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.remove("animation")
-            setTimeout(deleteTask, 150, during, taskContainer)
-            removeTask("duringlist", content.id)
-        })
-        todobtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.classList.remove("animation")
-            setTimeout(addanimation, 150, taskContainer)
-            todo.appendChild(taskContainer)
-            todolist.push(content)
-            localStorage.setItem('todolist', JSON.stringify(todolist))
-            removeTask("duringlist", content.id)
-            removeTask("donelist", content.id)
-            options.replaceChild(duringbtn, todobtn)
-        })
-        donebtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.classList.remove("animation")
-            setTimeout(addanimation, 150, taskContainer)
-            done.appendChild(taskContainer)
-            donelist.push(content)
-            localStorage.setItem('donelist', JSON.stringify(donelist))
-            removeTask("duringlist", content.id)
-            removeTask("todolist", content.id)
-            options.replaceChild(todobtn, donebtn)
-
-        })
+        createTask(content, during)
     }
     for(let i = 0; i<donelist.length ; i++) {
         const content = donelist[i]
-        const taskContainer = createContainer(done, content)
-        const options = taskContainer.querySelector(".options")
-        const duringbtn = createOptionsDuringBtn()
-        const donebtn = createOptionsDoneBtn()
-        const todobtn = createOptionsTodoBtn()
-        options.appendChild(duringbtn)
-        options.appendChild(todobtn)
-        const deletebtn = options.querySelector("#delete")
-        deletebtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.classList.remove("animation")
-            setTimeout(deleteTask, 150, done, taskContainer)
-            removeTask("donelist", content.id)
-        })
-        duringbtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.classList.remove("animation")
-            setTimeout(addanimation, 150, taskContainer)
-            during.appendChild(taskContainer)
-            duringlist.push(content)
-            localStorage.setItem('duringlist', JSON.stringify(duringlist))
-            removeTask("donelist", content.id)
-            removeTask("todolist", content.id)
-            options.replaceChild(todobtn, duringbtn)
-        })
-        todobtn.addEventListener("click", () => {
-            taskContainer.classList.toggle("animation")
-            options.classList.remove("animation")
-            setTimeout(addanimation, 150, taskContainer)
-            todo.appendChild(taskContainer)
-            todolist.push(content)
-            localStorage.setItem('todolist', JSON.stringify(todolist))
-            removeTask("donelist", content.id)
-            removeTask("duringlist", content.id)
-            options.replaceChild(duringbtn, todobtn)
-        })
+        createTask(content, done)
     }
 })
 
