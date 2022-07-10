@@ -361,7 +361,7 @@ h1 {
   transform: scaleX(1);
 } */
 
-.xd {
+.taskContainer {
   transform: translate3d(-350px, 0, 0);
   transition-timing-function: linear;
   transition-duration: 0.2s;
@@ -390,7 +390,7 @@ h1 {
     rgb(176, 5, 255)) 1;
   }
 } */
-.xd.animation {
+.taskContainer.animation {
   opacity: 1;
   transform: translate(0%);
 }
