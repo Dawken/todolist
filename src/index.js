@@ -1,2 +1,2 @@
-import {} from "/src/js-todolist"
-import {} from "/src/js-background"
+import  "/src/js-todolist"
+import "/src/js-background"
