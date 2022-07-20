@@ -1,10 +1,15 @@
-
+import "./js-background"
+type Task = {
+    value:string
+    id: string
+}
 const trash = document.querySelector(".trash")
 const submit = document.querySelector("#submit")
 const todo = document.querySelector(".todo")
 const during = document.querySelector(".during")
 const done = document.querySelector(".done")
-const input = document.getElementById("task-input")
+const input = document.getElementById("task-input") as HTMLInputElement
+
 
 const todolist =  JSON.parse(localStorage.todolist || '[]')
 const duringlist =  JSON.parse(localStorage.duringlist || '[]')
@@ -22,24 +27,25 @@ const generateId = () => {
     return String(Math.random())
 }
 
-const removeTask = (taskKey, taskId) => {
-    const tasksList = JSON.parse(localStorage.getItem(taskKey))
-    const newTaskList = tasksList.filter(task => task.id !== taskId)
-    localStorage.setItem(taskKey, JSON.stringify(newTaskList))
-}
 
-const createContainer = (taskListContainer, content) => {
+const removeTask = (taskKey: string, taskId: string) => {
+    const tasksList:Task[] = JSON.parse(localStorage.getItem(taskKey)!);
+    const newTaskList = tasksList.filter((task) => task.id !== taskId)
+    localStorage.setItem(taskKey, JSON.stringify(newTaskList))
+};
+
+const createContainer = (taskListContainer: Element | null, content: { value: string }) => {
 
     const taskContainer = document.createElement("div")
     taskContainer.classList.add("taskContainer")
 
     setTimeout(addanimation, 150)
 
-    function addanimation() {
+    function addanimation():void {
         taskContainer.classList.toggle("animation")
     }
 
-    taskListContainer.appendChild(taskContainer)
+    taskListContainer?.appendChild(taskContainer)
 
     const todofirst = document.createElement('div')
     todofirst.setAttribute('id', "todofirst")
@@ -92,15 +98,15 @@ const createOptionsDoneBtn = () => {
     return donebtn
 }
 
-const createTask = (task, taskListContainer, taskStatus) => {
+const createTask = (task:Task, taskListContainer: Element | null, taskStatus: string):void => {
     const taskContainer = createContainer(taskListContainer, task)
     const options = taskContainer.querySelector(".options")
     const duringbtn = createOptionsDuringBtn()
     const donebtn = createOptionsDoneBtn()
     const todobtn = createOptionsTodoBtn()
-    options.appendChild(duringbtn)
-    options.appendChild(donebtn)
-    options.appendChild(todobtn)
+    options?.appendChild(duringbtn)
+    options?.appendChild(donebtn)
+    options?.appendChild(todobtn)
     if(taskStatus === "todo") {
         todobtn.style.display="none"
     }
@@ -110,10 +116,10 @@ const createTask = (task, taskListContainer, taskStatus) => {
     else {
         donebtn.style.display="none"
     }
-    const deletebtn = options.querySelector("#delete")
-    deletebtn.addEventListener("click", () => {
+    const deletebtn = options?.querySelector("#delete")
+    deletebtn?.addEventListener("click", () => {
         taskContainer.classList.toggle("animation")
-        options.classList.remove("animation")
+        options?.classList.remove("animation")
         setTimeout(deleteTask, 150, todo, taskContainer)
         setTimeout(deleteTask, 150, during, taskContainer)
         setTimeout(deleteTask, 150, done, taskContainer)
@@ -124,11 +130,12 @@ const createTask = (task, taskListContainer, taskStatus) => {
     let currentTaskStatus = taskStatus
     todobtn.addEventListener("click", () => {
         taskContainer.classList.toggle("animation")
-        options.classList.remove("animation")
+        options?.classList.remove("animation")
         setTimeout(addanimation, 150, taskContainer)
-        todo.appendChild(taskContainer)
-        const savedToDoList = JSON.parse(localStorage.getItem("todolist"))
+        todo?.appendChild(taskContainer)
+        const savedToDoList = JSON.parse(localStorage.getItem("todolist")!)
         savedToDoList.push(task)
+
         localStorage.setItem('todolist', JSON.stringify(savedToDoList))
         removeTask("duringlist", task.id)
         removeTask("donelist", task.id)
@@ -144,10 +151,10 @@ const createTask = (task, taskListContainer, taskStatus) => {
 
     duringbtn.addEventListener("click", () => {
         taskContainer.classList.toggle("animation")
-        options.classList.remove("animation")
+        options?.classList.remove("animation")
         setTimeout(addanimation, 150, taskContainer)
-        during.appendChild(taskContainer)
-        const savedDuringList = JSON.parse(localStorage.getItem("duringlist"))
+        during?.appendChild(taskContainer)
+        const savedDuringList = JSON.parse(localStorage.getItem("duringlist")!)
         savedDuringList.push(task)
         localStorage.setItem('duringlist', JSON.stringify(savedDuringList))
         removeTask("todolist", task.id)
@@ -164,10 +171,10 @@ const createTask = (task, taskListContainer, taskStatus) => {
 
     donebtn.addEventListener("click", () => {
         taskContainer.classList.toggle("animation")
-        options.classList.remove("animation")
+        options?.classList.remove("animation")
         setTimeout(addanimation, 150, taskContainer)
-        done.appendChild(taskContainer)
-        const savedDoneList = JSON.parse(localStorage.getItem("donelist"))
+        done?.appendChild(taskContainer)
+        const savedDoneList = JSON.parse(localStorage.getItem("donelist")!)
         savedDoneList.push(task)
         localStorage.setItem('donelist', JSON.stringify(savedDoneList))
         removeTask("todolist", task.id)
@@ -183,14 +190,15 @@ const createTask = (task, taskListContainer, taskStatus) => {
     })
 }
 
-submit.addEventListener("click",  () => {
+
+submit?.addEventListener("click", () => {
 
 
     const task = {
         value: input.value,
         id: generateId()
     }
-    const todoListToUpdate = JSON.parse(localStorage.getItem('todolist'))
+    const todoListToUpdate = JSON.parse(localStorage.getItem('todolist')!)
     todoListToUpdate.push(task)
     localStorage.setItem('todolist', JSON.stringify(todoListToUpdate))
 
@@ -198,21 +206,20 @@ submit.addEventListener("click",  () => {
         alert("Please fill the task")
         return
     }
+
     input.value = ''
     createTask(task, todo, "todo")
 
 });
-const deleteTask = (taskList, taskContainer) => {
+const deleteTask = (taskList: { removeChild: (arg0: object) => void }, taskContainer: object) => {
     taskList.removeChild(taskContainer)
 }
-const addanimation = (taskContainer) => {
+const addanimation = (taskContainer: { classList: { toggle: (arg0: string) => void } }) => {
     taskContainer.classList.toggle("animation")
 }
-window.addEventListener("load", () => {
-
+window.addEventListener("load", ():void => {
 
     for(let i = 0; i<todolist.length ; i++) {
-
         const content = todolist[i]
         createTask(content, todo, "todo")
     }
