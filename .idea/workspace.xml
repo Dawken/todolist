@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="41fefb34-a81e-4b94-852a-044553988565" name="Changes" comment="save existing tasks to local storage">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js-todolist.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +120,7 @@
       <workItem from="1658494312286" duration="888000" />
       <workItem from="1658537976278" duration="94000" />
       <workItem from="1658593477339" duration="45000" />
-      <workItem from="1658594174402" duration="451000" />
+      <workItem from="1658594174402" duration="1636000" />
     </task>
     <task id="LOCAL-00001" summary="save existing tasks to local storage">
       <created>1656942172645</created>
